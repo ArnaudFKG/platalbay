@@ -5,6 +5,8 @@
 <?php
 $db = Database::connect();
 $req = $db->prepare('SELECT * FROM item');
-while($data= $req->fetch()){
-    echo $data['title'];
+$req->setFetchMode(PDO::FETCH_CLASS, 'Item');
+$req->execute();
+while($item = $req->fetch()){
+    $item->display();
 }

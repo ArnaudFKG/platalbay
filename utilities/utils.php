@@ -17,7 +17,48 @@ class Database {
     }
 }
 
+class User {
+    public $firstname;
+    public $lastname;
+    public $school;
+    public $phone;
+    public $mail;
+    public function display() {
+        echo $this->firstname." ".$this->lastname;
+    }
+}
 
+class Item {
+    public $title;
+    public $seller;
+    public $buyer;
+    public $price;
+    public $pricea;
+    public $pic;
+    public $enddate;
+    public $description;
+    public function display()
+    {
+        echo '<h3>'.$this->title.'</h3>';
+        if(isset($this->pic)){
+            echo '<img src="data/'.$this->pic.'">';
+        }
+
+        echo '<p>'.$this->description.'</p>';
+        if(isset($this->enddate)) {
+            echo $this->pricea;
+            date_default_timezone_set('Europe/Paris');
+            $now = new DateTime();
+            $end = date_create($this->enddate);
+            $interval = date_diff($now, $end);
+            echo '<p>Temps restant: '.$interval->d.' jours, '.$interval->h.' heures, '.$interval->i.' minutes et '.$interval->s.' secondes.</p>';
+        }
+        else{
+            echo $this->price;
+        }
+    }
+
+}
 
 
 $pages=array(
@@ -84,7 +125,44 @@ function entete($name, $css){
     <script type="text/javascript" src="js/code.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
-        $("h1").css("color","red");
+         if($("#type option:selected").val()==="1"){
+            $("#priceauction").show();
+            $("#pricedirect").hide();
+        }
+        else{
+            
+            $("#priceauction").hide();
+            $("#pricedirect").show();
+        }
+        $("#type").on(\'change\',function(){
+    if($("#type option:selected").val()==="1"){
+           $("#priceauction").show();
+            $("#pricedirect").hide();
+        }
+        else{
+            
+             $("#priceauction").hide();
+            $("#pricedirect").show();
+        }});
+         
+         if($("#pict option:selected").val()==="1"){
+            $("#pictureupload").show();
+        }
+        else{
+            $("#pictureupload").hide();
+        }
+        
+        $("#pict").on(\'change\',function(){
+    if($("#pict option:selected").val()==="1"){
+            $("#pictureupload").show();
+        }
+        else{
+            $("#pictureupload").hide();
+        }
+});
+        
+        
+           
     });
     </script>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
